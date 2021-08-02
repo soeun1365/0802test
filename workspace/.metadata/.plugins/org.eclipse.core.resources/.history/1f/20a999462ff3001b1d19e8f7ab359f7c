@@ -1,0 +1,5 @@
+package com.koreait.final1.config;
+
+public class BeanConfiguration {
+
+}

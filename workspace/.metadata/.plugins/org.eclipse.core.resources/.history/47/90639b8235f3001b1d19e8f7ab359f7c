@@ -1,0 +1,39 @@
+package com.koreait.final1.controller;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.koreait.final1.command.SelectBoardListCommand;
+
+@Controller
+public class BoardController {
+	private SqlSession sqlSession;
+	private SelectBoardListCommand selectBoardListCommand;
+	
+	@Autowired
+	public BoardController(SqlSession sqlSession,
+			SelectBoardListCommand selectBoardListCommand) {
+		this.sqlSession = sqlSession;
+		this.selectBoardListCommand = selectBoardListCommand;
+	}
+	
+	// method
+	@GetMapping(value= "/")
+	public String selectContactList(Model model) {
+		return "index";
+	}
+	
+	@GetMapping(value="selectBoardList.do")
+	public String selectBoardList(Model model) {
+		selectBoardListCommand.execute(sqlSession, model);
+		return "boardList";
+	}
+	
+	@GetMapping(value="insertBoardPage.do")
+	public String insertBoard() {
+		return "insertPage";
+	}
+}

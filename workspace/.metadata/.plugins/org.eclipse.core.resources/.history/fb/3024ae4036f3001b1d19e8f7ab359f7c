@@ -1,0 +1,32 @@
+package com.koreait.final1.command;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.ui.Model;
+
+import com.koreait.final1.dao.BoardDAO;
+import com.koreait.final1.dto.Board;
+
+public class InsertBoardCommand implements BoardCommand {
+
+	@Override
+	public void execute(SqlSession sqlSession, Model model) {
+		Map<String, Object> map = model.asMap();
+		HttpServletRequest request = (HttpServletRequest) map.get("request");
+		HttpServletResponse response = (HttpServletResponse) map.get("response");
+		
+		Board board = new Board();
+		board.setBwriter(request.getParameter("writer"));
+		board.setBtitle(request.getParameter("title"));
+		board.setBcontent(request.getParameter("content"));
+		
+		BoardDAO boardDAO = sqlSession.getMapper(BoardDAO.class);
+		int count = boardDAO.insertBoard();
+
+	}
+
+}

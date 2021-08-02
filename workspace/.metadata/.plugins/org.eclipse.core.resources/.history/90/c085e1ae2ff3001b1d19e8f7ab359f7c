@@ -1,0 +1,5 @@
+package com.koreait.final1.dao;
+
+public interface BoardDAO {
+
+}
